@@ -9,6 +9,12 @@
     "dev": "node --env-file=.env --watch src/server.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "drizzle-orm": "1.0.0-rc.4",
+    "express": "^5.2.1",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "1.0.0-rc.4"
   }
 }
