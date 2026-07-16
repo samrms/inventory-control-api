@@ -14,31 +14,7 @@ pnpm run schema
 
 ## Endpoints
 
-#### product
-
-GET /product
-
-POST /product
-
-GET /product/:id
-
-PUT /product/:id
-
-DELETE /product/:id
-
-#### trash
-
-GET /trash
-
-GET /trash/:id
-
-PATCH /trash/:id/restore
-
-#### movement
-
-GET /movement
-
-POST /movement
+click [here](endpoints.md), to view the endpoints
 
 ## Stack
 
