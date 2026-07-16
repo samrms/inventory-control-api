@@ -4,7 +4,7 @@ class ProductModel {
   async findAll() {
     const result = await pool.query(
       `
-      SELECT * FROM products
+      SELECT * FROM products WHERE deleted_at IS NULL
       `,
     )
 
@@ -27,14 +27,18 @@ class ProductModel {
   async findById({ id }) {
     const result = await pool.query(
       `
-      SELECT * FROM products WHERE id = $1
+      SELECT * FROM products
+      WHERE id = $1 AND deleted_at IS NULL
       `,
       [id],
     )
 
+    if (result.rows.length === 0) {
+      return { message: 'This product does not exists' }
+    }
+
     return result.rows
   }
-
   async update({ id, body }) {
     const { name, description = '', price } = body
 
@@ -54,12 +58,14 @@ class ProductModel {
 
     return result.rows
   }
-
   async delete({ id }) {
     const result = await pool.query(
       `
-      DELETE FROM products
-      WHERE id = $1;
+      UPDATE products
+      SET deleted_at = NOW()
+      WHERE id = $1
+        AND deleted_at IS NULL
+      RETURNING *;
       `,
       [id],
     )
@@ -67,4 +73,4 @@ class ProductModel {
   }
 }
 
-export { ProductModel }
+export default new ProductModel()

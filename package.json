@@ -6,15 +6,15 @@
   "type": "module",
   "packageManager": "pnpm@10.19.0",
   "scripts": {
-    "dev": "node --env-file=.env --watch src/server.js"
+    "dev": "node --env-file=.env --watch src/server.js",
+    "start": "node --env-file=.env src/server.js",
+    "schema": "node --env-file=.env src/database/initial-database/load-schema.js"
   },
   "dependencies": {
-    "drizzle-orm": "1.0.0-rc.4",
     "express": "^5.2.1",
     "pg": "^8.22.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.20.0",
-    "drizzle-kit": "1.0.0-rc.4"
+    "@types/pg": "^8.20.0"
   }
 }

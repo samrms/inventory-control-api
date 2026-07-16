@@ -22,4 +22,4 @@ class MovementModel {
   }
 }
 
-export { MovementModel }
+export default new MovementModel()
