@@ -7,14 +7,18 @@
   "packageManager": "pnpm@10.19.0",
   "scripts": {
     "dev": "node --env-file=.env --watch src/server.js",
-    "start": "node --env-file=.env src/server.js",
-    "schema": "node --env-file=.env src/database/initial-database/load-schema.js"
+    "start": "node src/server.js",
+    "schema": "node --env-file=.env src/database/initial-database/load-schema.js",
+    "lint": "eslint .",
+    "test": "echo \"Nothing to test\""
   },
   "dependencies": {
     "express": "^5.2.1",
     "pg": "^8.22.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.20.0"
+    "@types/pg": "^8.20.0",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0"
   }
 }
