@@ -3,25 +3,29 @@
 #### product
 
 GET /product
-
 POST /product
 
 GET /product/:id
-
 PUT /product/:id
-
 DELETE /product/:id
 
 #### trash
 
-GET /trash
+GET /product/trash
 
-GET /trash/:id
+GET /product/trash/:id
+PATCH /product/trash/:id/restore
 
-PATCH /trash/:id/restore
+#### stock
 
-#### movement
+GET /product/stock
 
-GET /movement
+GET /product/stock-in
+GET /product/stock-out
 
-POST /movement
+POST /product/stock-in
+POST /product/stock-out
+
+#### movements
+
+GET /product/stock/movement

@@ -1,11 +1,12 @@
 import { Router } from 'express'
-
 import movementController from '../controllers/movement-controller.js'
-import { validateCreateMovement } from '../middleware/movement-validation.js'
 
 const movement = Router()
 
-movement.get('/', movementController.findAll)
-movement.post('/', validateCreateMovement, movementController.create)
+movement.get('/stock', movementController.stock)
+movement.get('/stock/movement', movementController.movement)
+
+movement.post('/stock-in', movementController.in)
+movement.post('/stock-out', movementController.out)
 
 export { movement }

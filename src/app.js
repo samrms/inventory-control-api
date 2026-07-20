@@ -8,8 +8,8 @@ const app = express()
 
 app.use(express.json())
 
+app.use('/product', movement)
 app.use('/product/trash', trash)
 app.use('/product', product)
-app.use('/movement', movement)
 
 export { app }

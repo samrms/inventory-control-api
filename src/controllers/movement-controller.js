@@ -1,14 +1,26 @@
 import movementModel from '../models/movement-model.js'
 
 class MovementController {
-  async create(req, res) {
+  async in(req, res) {
     const { body } = req
-    const result = await movementModel.create({ body })
+
+    const result = await movementModel.in({ body })
+
     return res.status(201).json(result)
   }
+  async out(req, res) {
+    const { body } = req
+    const result = await movementModel.out({ body })
 
-  async findAll(req, res) {
-    const result = await movementModel.findAll()
+    return res.status(201).json(result)
+  }
+  async stock(req, res) {
+    const result = await movementModel.stock()
+    return res.status(200).json(result)
+  }
+  async movement(req, res) {
+    const result = await movementModel.movement()
+
     return res.status(200).json(result)
   }
 }

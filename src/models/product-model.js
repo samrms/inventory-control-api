@@ -17,9 +17,17 @@ class ProductModel {
       `
         INSERT INTO products (sku, name, description, price)
         VALUES ($1, $2, $3, $4)
-        RETURNING *
+        RETURNING *;
       `,
       [sku, name, description, price],
+    )
+    await pool.query(
+      `
+        INSERT INTO stock (product_id)
+        VALUES ($1)
+        RETURNING *;
+      `,
+      [result.rows[0].id],
     )
 
     return result.rows
