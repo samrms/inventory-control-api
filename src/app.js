@@ -9,9 +9,9 @@ const app = express()
 
 app.use(express.json())
 
-app.use('/products', movementRoutes)
-app.use('/products/trash', trashRoutes)
-app.use('/products', productRoutes)
+app.use('/product', movementRoutes)
+app.use('/product/trash', trashRoutes)
+app.use('/product', productRoutes)
 app.use('/docs', openapiRoute)
 
 export { app }

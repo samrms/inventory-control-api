@@ -5,15 +5,15 @@ import swaggerUi from 'swagger-ui-express'
 const router = Router()
 
 const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'inventory-control-api',
-      version: '1.0.0',
-      description: 'API for inventory control',
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'inventory-control-api',
+            version: '1.0.0',
+            description: 'API for inventory control',
+        },
     },
-  },
-  apis: ['./src/**/*.js'],
+    apis: ['./src/**/*.js'],
 }
 
 const swaggerSpec = swaggerJsdoc(options)

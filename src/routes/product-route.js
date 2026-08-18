@@ -17,9 +17,9 @@ const router = Router()
  *         description: List of products
  */
 
-router.get('/', productController.main)
+router.get('/', productController.getAll)
 router.post('/', validateCreateProduct, productController.create)
-router.get('/:id', productController.byId)
+router.get('/:id', productController.getById)
 router.put('/:id', validateCreateProduct, productController.uptdate)
 router.delete('/:id', productController.delete)
 

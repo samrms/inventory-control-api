@@ -12,10 +12,6 @@ pnpm run dev
 pnpm run schema
 ```
 
-## Endpoints
-
-click [here](endpoints.md), to view the endpoints
-
 ## Stack
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23ffff00.svg?style=for-the-badge&logo=javascript&logoColor=%23323330)
