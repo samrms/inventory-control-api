@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import trashController from '../controllers/trash-controller.js'
 
-const trash = Router()
+const router = Router()
 
-trash.get('/', trashController.trash)
-trash.get('/:id', trashController.trashById)
-trash.patch('/:id/restore', trashController.restore)
+router.get('/', trashController.trash)
+router.get('/:id', trashController.trashById)
+router.patch('/:id/restore', trashController.restore)
 
-export { trash }
+export { router as trashRoutes }

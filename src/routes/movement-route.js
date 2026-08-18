@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import movementController from '../controllers/movement-controller.js'
 
-const movement = Router()
+const router = Router()
 
-movement.get('/stock', movementController.stock)
-movement.get('/stock/movement', movementController.movement)
+router.get('/stock', movementController.stock)
+router.get('/stock/movement', movementController.movement)
 
-movement.post('/stock-in', movementController.in)
-movement.post('/stock-out', movementController.out)
+router.post('/stock-in', movementController.in)
+router.post('/stock-out', movementController.out)
 
-export { movement }
+export { router as movementRoutes }

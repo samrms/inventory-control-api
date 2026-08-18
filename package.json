@@ -15,12 +15,15 @@
   "dependencies": {
     "express": "^5.2.1",
     "license": "^1.0.3",
-    "pg": "^8.22.0"
+    "pg": "^8.22.0",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/pg": "^8.20.0",
     "eslint": "^10.7.0",
-    "globals": "^17.7.0"
+    "globals": "^17.7.0",
+    "vitest": "^4.1.10"
   },
   "license": "MIT"
 }
