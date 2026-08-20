@@ -8,7 +8,8 @@
     "scripts": {
         "dev": "node --env-file=.env --watch src/server.js",
         "start": "node src/server.js",
-        "schema": "node --env-file=.env src/database/initial-database/load-schema.js",
+        "db:schema": "node --env-file=.env src/database/scripts/run-shema.js",
+        "db:seed": "node --env-file=.env src/database/scripts/run-seed.js",
         "test": "vitest",
         "lint": "prettier . --check",
         "format": "prettier . --write"

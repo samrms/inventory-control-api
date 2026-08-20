@@ -6,3 +6,4 @@ backup/
 ## Files
 .env
 plan.*
+*.backup

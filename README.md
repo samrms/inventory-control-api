@@ -8,10 +8,6 @@ this is a symple inventory control api
 pnpm run dev
 ```
 
-```schema
-pnpm run schema
-```
-
 ## Stack
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23ffff00.svg?style=for-the-badge&logo=javascript&logoColor=%23323330)
