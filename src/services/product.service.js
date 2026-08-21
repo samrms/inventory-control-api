@@ -6,11 +6,16 @@ class ProductServices {
     async getAllProducts({ query }) {
         const page = Number(query.page) || 1
         const limit = Number(query.limit) || 5
+        const offset = (page - 1) * limit
 
-        const { rows } = await this.productRepository.findAll()
+        const { resultPagination, resultCount } =
+            await this.productRepository.findAll({
+                limit,
+                offset,
+            })
 
-        const data = rows.slice((page - 1) * limit, page * limit)
-        const total = rows.length
+        const data = resultPagination
+        const total = Number(resultCount.count)
         const totalPages = Math.ceil(total / limit)
 
         return {

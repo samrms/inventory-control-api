@@ -2,11 +2,38 @@ class ProductRepository {
     constructor(pool) {
         this.pool = pool
     }
-    async findAll() {
-        const sql = `SELECT * FROM products ORDER BY sku`
-        const { rows } = await this.pool.query(sql)
+    async findAll({ limit, offset }) {
+        const sqlPagination = `
+            SELECT * FROM products
+            ORDER BY sku
+            LIMIT $1 OFFSET $2;
+          `
 
-        return { rows }
+        const sqlTotalCount = `
+          SELECT COUNT(*) FROM products
+        `
+        const [
+            { rows: resultPagination },
+            {
+                rows: [resultCount],
+            },
+        ] = await Promise.all([
+            this.pool.query(
+                `
+              SELECT *
+              FROM products
+              ORDER BY created_at DESC
+              LIMIT $1 OFFSET $2
+            `,
+                [limit, offset]
+            ),
+
+            this.pool.query(`
+              SELECT COUNT(*)
+              FROM products
+            `),
+        ])
+        return { resultPagination, resultCount }
     }
 
     async findById({ id }) {
