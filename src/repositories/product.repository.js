@@ -2,53 +2,72 @@ class ProductRepository {
     constructor(pool) {
         this.pool = pool
     }
+    async countAll() {
+        const sql = `SELECT COUNT(*) FROM products;`
+
+        const {
+            rows: [{ count }],
+        } = await this.pool.query(sql)
+
+        return { count }
+    }
     async findAll({ limit, offset }) {
-        const sqlPagination = `
+        const sql = `
             SELECT * FROM products
             ORDER BY sku
             LIMIT $1 OFFSET $2;
           `
 
-        const sqlTotalCount = `
-          SELECT COUNT(*) FROM products
-        `
-        const [
-            { rows: resultPagination },
-            {
-                rows: [resultCount],
-            },
-        ] = await Promise.all([
-            this.pool.query(
-                `
-              SELECT *
-              FROM products
-              ORDER BY created_at DESC
-              LIMIT $1 OFFSET $2
-            `,
-                [limit, offset]
-            ),
+        const { rows: data } = await this.pool.query(sql, [limit, offset])
 
-            this.pool.query(`
-              SELECT COUNT(*)
-              FROM products
-            `),
-        ])
-        return { resultPagination, resultCount }
+        return { data }
     }
 
     async findById({ id }) {
         const sql = `SELECT * FROM products WHERE id = $1;`
-        const { rows } = await this.pool.query(sql, [id])
-        return { rows }
+        const { rows: data } = await this.pool.query(sql, [id])
+        return { data }
     }
     async findBySku({ sku }) {
         const sql = `SELECT * FROM products WHERE sku = $1;`
-        const { rows } = await this.pool.query(sql, [sku])
-        return { rows }
+        const { rows: data } = await this.pool.query(sql, [sku])
+        return { data }
     }
-    async create({ data }) {}
-    async update({ id, data }) {}
-    async delete({ id }) {}
+    async create({ input }) {
+        const { sku, name, description, price } = input
+        const sql = `
+          INSERT INTO products (sku, name, description, price)
+          VALUES ($1, $2, $3, $4)
+          RETURNING *;
+      `
+        const { rows: data } = await this.pool.query(sql, [
+            sku,
+            name,
+            description,
+            price,
+        ])
+        return { data }
+    }
+    async update({ id, body }) {
+        const { name, description, price } = body
+        const sql = `
+        UPDATE products
+        SET name = $1,
+            description = $2,
+            price = $3,
+            updated_at = NOW()
+        WHERE id = $4;
+      `
+        await this.pool.query(sql, [name, description, parseFloat(price), id])
+    }
+    async delete({ id }) {
+        const sql = `
+          UPDATE products
+          SET deleted_at = NOW()
+          WHERE id = $1;
+        `
+        await this.pool.query(sql, [id])
+    }
 }
 
 export { ProductRepository }

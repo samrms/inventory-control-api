@@ -4,7 +4,8 @@ const varibles = ['PORT', 'DB_URL']
 
 for (const varible of varibles) {
     if (!envVarible[varible]) {
-        throw new Error(`env ${varible} does not exits`)
+        const strError = `env ${varible} does not exits`
+        throw new Error(strError)
     }
 }
 
