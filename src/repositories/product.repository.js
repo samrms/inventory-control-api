@@ -2,34 +2,81 @@ class ProductRepository {
     constructor(pool) {
         this.pool = pool
     }
-    async countAll() {
-        const sql = `SELECT COUNT(*) FROM products;`
 
+    async buildSql({ params }) {
+        const filters = []
+        const pagination = []
+        const minPrice = {}
+        const values = []
+        let count = 1
+
+        for (let param in params) {
+            for (let key in params[param]) {
+                if (params[param][key] || params[param][key] == 0) {
+                    if (key == 'search') {
+                        filters.push(`name ILIKE '%' || $${count} || '%'`)
+                    }
+                    if (key == 'minPrice') {
+                        minPrice['exists'] = true
+                        minPrice['pointer'] = count
+                    }
+                    if (key == 'maxPrice' && minPrice) {
+                        filters.push(
+                            `price BETWEEN $${minPrice['pointer']} AND $${count}`
+                        )
+                    }
+                    if (key == 'limit') {
+                        pagination.push(`LIMIT $${count}`)
+                    }
+                    if (key == 'offset') {
+                        pagination.push(`OFFSET $${count}`)
+                    }
+                    values.push(params[param][key])
+                    count++
+                }
+            }
+        }
+        return { filters, pagination, values }
+    }
+    async countAll({ filter }) {
+        console.log(filter)
+        const { filters, values } = await this.buildSql({ params: { filter } })
+
+        const sql = `
+          SELECT COUNT(*)
+          FROM products
+          WHERE ${filters ? `${filters.join(' AND ')} AND` : ''} deleted_at IS NULL;
+        `
+        console.log(sql, values)
         const {
             rows: [{ count }],
-        } = await this.pool.query(sql)
-
+        } = await this.pool.query(sql, values)
         return { count }
     }
-    async findAll({ limit, offset }) {
-        const sql = `
-            SELECT * FROM products
-            ORDER BY sku
-            LIMIT $1 OFFSET $2;
-          `
+    async findAll({ params }) {
+        const { filters, pagination, values } = await this.buildSql({ params })
 
-        const { rows: data } = await this.pool.query(sql, [limit, offset])
+        const sql = `
+          SELECT
+          *
+          FROM products
+          WHERE ${filters ? `${filters.join(' AND ')} AND ` : ''} deleted_at IS NULL
+          ORDER BY sku
+          ${pagination.join(' ')};
+        `
+        const { rows: data } = await this.pool.query(sql, values)
+        console.log(sql)
+        console.log(values)
 
         return { data }
     }
-
     async findById({ id }) {
-        const sql = `SELECT * FROM products WHERE id = $1;`
+        const sql = `SELECT * FROM products WHERE id = $1 AND deleted_at IS NULL;`
         const { rows: data } = await this.pool.query(sql, [id])
         return { data }
     }
     async findBySku({ sku }) {
-        const sql = `SELECT * FROM products WHERE sku = $1;`
+        const sql = `SELECT * FROM products WHERE sku = $1 AND deleted_at IS NULL;`
         const { rows: data } = await this.pool.query(sql, [sku])
         return { data }
     }

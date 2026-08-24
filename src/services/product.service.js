@@ -4,23 +4,41 @@ class ProductServices {
     }
 
     async getAllProducts({ query }) {
-        const limit = Math.min(
-            Math.max(!Number(query.limit) ? 5 : Number(query.limit), 5),
-            100
+        const { count } = await this.productRepository.countAll({
+            filter: {
+                search: query.search,
+                minPrice: Number(query.minPrice),
+                maxPrice: Number(query.maxPrice),
+            },
+        })
+        const limit = Math.ceil(
+            Math.min(
+                Math.max(!Number(query.limit) ? 5 : Number(query.limit), 5),
+                100
+            )
         )
 
-        const { count } = await this.productRepository.countAll()
-
-        const page = Math.min(
-            Math.max(!Number(query.page) ? 1 : Number(query.page), 1),
-            Number(count) / limit
+        const page = Math.ceil(
+            Math.min(
+                Math.max(!Number(query.page) ? 1 : Number(query.page), 1),
+                Number(count) / limit || 1
+            )
         )
 
         const offset = (page - 1) * limit
 
         const { data = [] } = await this.productRepository.findAll({
-            limit,
-            offset,
+            params: {
+                filter: {
+                    search: query.search,
+                    minPrice: Number(query.minPrice),
+                    maxPrice: Number(query.maxPrice),
+                },
+                pagination: {
+                    limit,
+                    offset,
+                },
+            },
         })
 
         const total = Number(count)

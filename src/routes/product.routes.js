@@ -1,10 +1,13 @@
 import { Router } from 'express'
-import { productController } from '../container/product.container.js'
+import {
+    productController,
+    productValidationMiddleware,
+} from '../container/product.container.js'
 
 const router = Router()
 
 router.get('/', productController.getAllProducts)
-router.post('/', productController.createProduct)
+router.post('/', productValidationMiddleware, productController.createProduct)
 router.get('/:id', productController.getProductById)
 router.put('/:id', productController.updateProduct)
 router.delete('/:id', productController.deleteProduct)
