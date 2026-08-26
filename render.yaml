@@ -1,0 +1,24 @@
+services:
+    - type: web
+      name: inventory-control-api
+      runtime: node
+      plan: free
+      buildCommand: pnpm install --frozen-lockfile && pnpm migrate
+      startCommand: pnpm start
+      healthCheckPath: /health
+      envVars:
+          - key: NODE_ENV
+            value: production
+          - key: DATABASE_URL
+            fromDatabase:
+                name: inventory-control-db
+                property: connectionString
+          - key: JWT_SECRET
+            generateValue: true
+          - key: PORT
+            value: 10000
+
+databases:
+    - name: inventory-control-db
+      plan: free
+      databaseName: inventory_control

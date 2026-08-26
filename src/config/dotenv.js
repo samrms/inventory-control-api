@@ -1,15 +1,13 @@
-const envVarible = process.env
+const variables = ['PORT', 'DATABASE_URL', 'JWT_SECRET']
 
-const varibles = ['PORT', 'DB_URL']
-
-for (const varible of varibles) {
-    if (!envVarible[varible]) {
-        const strError = `env ${varible} does not exits`
-        throw new Error(strError)
+for (const variable of variables) {
+    if (!process.env[variable]) {
+        throw new Error(`env ${variable} does not exist`)
     }
 }
 
 export const env = {
     port: process.env.PORT,
-    db_url: process.env.DB_URL,
+    database_url: process.env.DATABASE_URL,
+    jwt_secret: process.env.JWT_SECRET,
 }
