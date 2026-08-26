@@ -1,6 +1,10 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest'
 import pg from 'pg'
 import { ProductsRepository } from '../../src/modules/products/products.repository.js'
+import {
+    parsePagination,
+    paginateResponse,
+} from '../../src/shared/validation/pagination.js'
 import { runMigrations, teardown, seedTestData } from '../helpers/db.js'
 
 let pool
@@ -15,7 +19,7 @@ beforeAll(async () => {
     })
     await teardown(pool)
     await runMigrations(pool)
-    repo = new ProductsRepository(pool)
+    repo = new ProductsRepository(pool, parsePagination, paginateResponse)
     seed = await seedTestData(pool)
 })
 
