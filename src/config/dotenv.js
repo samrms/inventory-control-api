@@ -1,4 +1,4 @@
-const variables = ['PORT', 'DATABASE_URL', 'JWT_SECRET']
+const variables = ['DATABASE_URL', 'JWT_SECRET']
 
 for (const variable of variables) {
     if (!process.env[variable]) {
@@ -7,7 +7,7 @@ for (const variable of variables) {
 }
 
 export const env = {
-    port: process.env.PORT,
+    port: process.env.PORT || '3333',
     database_url: process.env.DATABASE_URL,
     jwt_secret: process.env.JWT_SECRET,
 }
