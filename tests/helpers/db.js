@@ -220,8 +220,11 @@ export async function runMigrations(pool) {
             created_at TIMESTAMPTZ DEFAULT NOW()
         )`,
         `CREATE TABLE IF NOT EXISTS revoked_tokens (
-            token_hash VARCHAR(64) PRIMARY KEY,
-            revoked_at TIMESTAMPTZ DEFAULT NOW()
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            token_hash VARCHAR(64) UNIQUE NOT NULL,
+            user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+            expires_at TIMESTAMPTZ NOT NULL,
+            created_at TIMESTAMPTZ DEFAULT NOW()
         )`,
     ]
 

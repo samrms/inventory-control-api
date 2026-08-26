@@ -1,4 +1,6 @@
-exports.up = (pgm) => {
+exports.up = async (pgm) => {
+    await pgm.sql(`DROP TABLE IF EXISTS revoked_tokens CASCADE`)
+
     pgm.createTable('revoked_tokens', {
         id: {
             type: 'UUID',
