@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest'
 import pg from 'pg'
-import { ProductsRepository } from '../../src/modules/products/products-repository.js'
+import { ProductsRepository } from '../../src/modules/products/products.repository.js'
 import { runMigrations, teardown, seedTestData } from '../helpers/db.js'
 
 let pool

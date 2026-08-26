@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { ProductsService } from '../../src/modules/products/products-service.js'
+import { ProductsService } from '../../src/modules/products/products.service.js'
+import { AppError } from '../../src/shared/errors/app-error.js'
 
 function createMockRepo(overrides = {}) {
     return {
@@ -25,7 +26,7 @@ describe('ProductsService', () => {
     beforeEach(() => {
         mockRepo = createMockRepo()
         mockAudit = createMockAudit()
-        service = new ProductsService(mockRepo, mockAudit)
+        service = new ProductsService(mockRepo, mockAudit, AppError)
     })
 
     describe('list', () => {

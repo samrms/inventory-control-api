@@ -1,12 +1,11 @@
 import { pool } from '../../database/connection.js'
-import { AuthRepository } from './auth-repository.js'
-import { AuthService } from './auth-service.js'
-import { AuthController } from './auth-controller.js'
-import { authRoutes } from './auth-routes.js'
+import { AppError } from '../../shared/errors/app-error.js'
+import { AuthRepository } from './auth.repository.js'
+import { AuthService } from './auth.service.js'
+import { AuthController } from './auth.controller.js'
 
 const authRepository = new AuthRepository(pool)
-const authService = new AuthService(authRepository)
+const authService = new AuthService(authRepository, pool, AppError)
 const authController = new AuthController(authService)
-const routes = authRoutes(authController)
 
-export { routes as authRoutes }
+export { authController }

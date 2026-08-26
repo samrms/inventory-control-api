@@ -3,18 +3,19 @@ import helmet from 'helmet'
 import cors from 'cors'
 import rateLimit from 'express-rate-limit'
 
-import { authRoutes } from './modules/auth/index.js'
-import { usersRoutes } from './modules/users/index.js'
-import { productsRoutes } from './modules/products/index.js'
-import { warehousesRoutes } from './modules/warehouses/index.js'
-import { inventoryRoutes } from './modules/inventory/index.js'
-import { movementsRoutes } from './modules/movements/index.js'
-import { transfersRoutes } from './modules/transfers/index.js'
-import { reservationsRoutes } from './modules/reservations/index.js'
-import { suppliersRoutes } from './modules/suppliers/index.js'
-import { purchaseOrdersRoutes } from './modules/purchase-orders/index.js'
-import { auditLogsRoutes } from './modules/audit-logs/index.js'
-import { healthRoutes } from './modules/health/index.js'
+import { authRoutes } from './modules/auth/auth.routes.js'
+import { usersRoutes } from './modules/users/users.routes.js'
+import { productsRoutes } from './modules/products/products.routes.js'
+import { warehousesRoutes } from './modules/warehouses/warehouses.routes.js'
+import { inventoryRoutes } from './modules/inventory/inventory.routes.js'
+import { movementsRoutes } from './modules/movements/movements.routes.js'
+import { transfersRoutes } from './modules/transfers/transfers.routes.js'
+import { reservationsRoutes } from './modules/reservations/reservations.routes.js'
+import { suppliersRoutes } from './modules/suppliers/suppliers.routes.js'
+import { purchaseOrdersRoutes } from './modules/purchase-orders/purchase-orders.routes.js'
+import { auditLogsRoutes } from './modules/audit-logs/audit-logs.routes.js'
+import { healthRoutes } from './modules/health/health.routes.js'
+import { docsRoutes } from './modules/docs/docs.routes.js'
 import { errorMiddleware } from './shared/errors/error-middleware.js'
 
 const app = express()
@@ -45,7 +46,8 @@ app.use(`${api}/reservations`, reservationsRoutes)
 app.use(`${api}/suppliers`, suppliersRoutes)
 app.use(`${api}/purchase-orders`, purchaseOrdersRoutes)
 app.use(`${api}/audit-logs`, auditLogsRoutes)
-app.use('/health', healthRoutes())
+app.use(`${api}/docs`, docsRoutes)
+app.use('/health', healthRoutes)
 
 app.use(errorMiddleware)
 

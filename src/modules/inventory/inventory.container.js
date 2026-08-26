@@ -1,18 +1,26 @@
 import { pool } from '../../database/connection.js'
+import { AppError } from '../../shared/errors/app-error.js'
+import {
+    parsePagination,
+    paginateResponse,
+} from '../../shared/validation/pagination.js'
 import { AuditLogRepository } from '../../shared/audit/audit-log.js'
-import { InventoryRepository } from './inventory-repository.js'
-import { InventoryService } from './inventory-service.js'
-import { InventoryController } from './inventory-controller.js'
-import { inventoryRoutes } from './inventory-routes.js'
+import { InventoryRepository } from './inventory.repository.js'
+import { InventoryService } from './inventory.service.js'
+import { InventoryController } from './inventory.controller.js'
 
-const inventoryRepository = new InventoryRepository(pool)
 const auditLogRepository = new AuditLogRepository(pool)
+const inventoryRepository = new InventoryRepository(
+    pool,
+    parsePagination,
+    paginateResponse
+)
 const inventoryService = new InventoryService(
     inventoryRepository,
     auditLogRepository,
-    pool
+    pool,
+    AppError
 )
 const inventoryController = new InventoryController(inventoryService)
-const routes = inventoryRoutes(inventoryController)
 
-export { routes as inventoryRoutes, inventoryRepository }
+export { inventoryController, inventoryRepository }

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest'
 import pg from 'pg'
-import { InventoryRepository } from '../../src/modules/inventory/inventory-repository.js'
+import { InventoryRepository } from '../../src/modules/inventory/inventory.repository.js'
 import { runMigrations, teardown, seedTestData } from '../helpers/db.js'
 
 let pool

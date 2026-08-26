@@ -1,12 +1,18 @@
 import { pool } from '../../database/connection.js'
-import { AuditLogsRepository } from './audit-logs-repository.js'
-import { AuditLogsService } from './audit-logs-service.js'
-import { AuditLogsController } from './audit-logs-controller.js'
-import { auditLogsRoutes } from './audit-logs-routes.js'
+import {
+    parsePagination,
+    paginateResponse,
+} from '../../shared/validation/pagination.js'
+import { AuditLogsRepository } from './audit-logs.repository.js'
+import { AuditLogsService } from './audit-logs.service.js'
+import { AuditLogsController } from './audit-logs.controller.js'
 
-const auditLogsRepository = new AuditLogsRepository(pool)
+const auditLogsRepository = new AuditLogsRepository(
+    pool,
+    parsePagination,
+    paginateResponse
+)
 const auditLogsService = new AuditLogsService(auditLogsRepository)
 const auditLogsController = new AuditLogsController(auditLogsService)
-const routes = auditLogsRoutes(auditLogsController)
 
-export { routes as auditLogsRoutes }
+export { auditLogsController }

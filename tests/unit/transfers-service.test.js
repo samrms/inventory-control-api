@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { TransfersService } from '../../src/modules/transfers/transfers-service.js'
+import { TransfersService } from '../../src/modules/transfers/transfers.service.js'
 import { AppError } from '../../src/shared/errors/app-error.js'
 
 function createMockTransfersRepo(overrides = {}) {
@@ -53,7 +53,8 @@ describe('TransfersService', () => {
             mockTransfersRepo,
             mockInventoryRepo,
             mockAudit,
-            mockPool
+            mockPool,
+            AppError
         )
     })
 

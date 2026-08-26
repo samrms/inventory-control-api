@@ -1,12 +1,18 @@
 import { pool } from '../../database/connection.js'
-import { MovementsRepository } from './movements-repository.js'
-import { MovementsService } from './movements-service.js'
-import { MovementsController } from './movements-controller.js'
-import { movementsRoutes } from './movements-routes.js'
+import {
+    parsePagination,
+    paginateResponse,
+} from '../../shared/validation/pagination.js'
+import { MovementsRepository } from './movements.repository.js'
+import { MovementsService } from './movements.service.js'
+import { MovementsController } from './movements.controller.js'
 
-const movementsRepository = new MovementsRepository(pool)
+const movementsRepository = new MovementsRepository(
+    pool,
+    parsePagination,
+    paginateResponse
+)
 const movementsService = new MovementsService(movementsRepository)
 const movementsController = new MovementsController(movementsService)
-const routes = movementsRoutes(movementsController)
 
-export { routes as movementsRoutes }
+export { movementsController }

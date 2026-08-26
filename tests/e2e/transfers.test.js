@@ -11,11 +11,11 @@ beforeAll(async () => {
     app = result.app
     seed = result.seed
 
-    const loginRes = await request(app)
-        .post('/api/v1/auth/login')
+    const signInRes = await request(app)
+        .post('/api/v1/auth/sign-in')
         .send({ email: 'admin@e2e.com', password: 'password123' })
 
-    token = loginRes.body.data.token
+    token = signInRes.body.data.token
 
     await request(app)
         .post('/api/v1/inventory/receive')
